@@ -126,6 +126,14 @@ function Move-HomeMedia {
     }
 
     end {
+        # Get all remaining files that were not processed
+        $allRemainingFiles = Get-ChildItem -Path $SourcePath -File -Recurse
+        $allRemFilteredFiles = $allRemainingFiles.where({ $_.Extension.ToLower() -ne ".json" })
+        if ($allRemFilteredFiles) {
+            $allRemFilteredFiles.FullName
+            Write-Warning "Found $($allRemFilteredFiles.Count) files that were not processed"
+        }
+
         # Clean up COM object
         [System.Runtime.Interopservices.Marshal]::ReleaseComObject($shell) | Out-Null
     }
