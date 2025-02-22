@@ -45,6 +45,7 @@ function Move-HomeMedia {
         [string]$DestinationPath,
 
         [Parameter(Mandatory = $false)]
+        [ValidateNotNull()]
         [string[]]$FileExtensions = @(
             '.jpg', '.jpeg', '.png', '.mp4', '.mov',
             '.avi', '.mts', '.heic', '.tif', '.bmp',
