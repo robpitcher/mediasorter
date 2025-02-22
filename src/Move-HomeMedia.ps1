@@ -37,6 +37,7 @@
 
 function Move-HomeMedia {
     [CmdletBinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', 'FileExtensions')]
     param(
         [Parameter(Mandatory = $true)]
         [string]$SourcePath,
