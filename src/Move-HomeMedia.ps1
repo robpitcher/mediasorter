@@ -48,7 +48,7 @@ function Move-HomeMedia {
         [string[]]$FileExtensions = @(
             '.jpg', '.jpeg', '.png', '.mp4', '.mov',
             '.avi', '.mts', '.heic', '.tif', '.bmp',
-            '.mpg', '.3gp', '.wmv', '.gif'
+            '.mpg', '.3gp', '.wmv', '.gif', '.dng'
         )
     )
 
