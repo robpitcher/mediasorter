@@ -85,7 +85,7 @@ function Move-HomeMedia {
                     $cleanDateTaken = $dateTaken -replace '[^\x20-\x7E]', ''
                     $dateObj = [DateTime]::Parse($cleanDateTaken)
                     $yearFolder = $dateObj.ToString('yyyy')
-                    $monthFolder = $dateObj.ToString('MM')
+                    $monthFolder = $dateObj.Month.ToString('00')
 
                     # Create destination path
                     $newPath = Join-Path -Path $DestinationPath -ChildPath $yearFolder
