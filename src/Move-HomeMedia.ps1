@@ -74,8 +74,10 @@ function Move-HomeMedia {
                 $folder = $shell.Namespace($currentFile.Directory.FullName)
                 $item = $folder.ParseName($currentFile.Name)
 
-                # Get date taken (index 12 is usually Date Taken)
-                $dateTaken = $folder.GetDetailsOf($item, 12)
+                # Get date taken (try index 12 first, then 208)
+                $dateTaken = ($folder.GetDetailsOf($item, 12)) ?
+                    ($folder.GetDetailsOf($item, 12)) :
+                    ($folder.GetDetailsOf($item, 208))
 
                 if ([string]::IsNullOrEmpty($dateTaken)) {
                     Write-Warning "No date taken found for: $($currentFile.FullName)"
