@@ -1,3 +1,40 @@
+<#
+.SYNOPSIS
+    Organizes media files into a year/month folder structure based on their creation date.
+
+.DESCRIPTION
+    The Move-HomeMedia function moves media files from a source directory to a destination directory,
+    organizing them into a folder structure based on the date the media was created (YYYY/MM).
+    It uses Windows Shell COM object to access file metadata and determine the creation date.
+
+.PARAMETER SourcePath
+    The root path containing the media files to be organized.
+
+.PARAMETER DestinationPath
+    The target path where the organized folder structure will be created.
+
+.PARAMETER FileExtensions
+    An array of file extensions to process. By default, includes common media formats:
+    .jpg, .jpeg, .png, .mp4, .mov, .avi, .mts, .heic, .tif, .bmp, .mpg, .3gp, .wmv, .gif
+
+.EXAMPLE
+    Move-HomeMedia -SourcePath "C:\Photos" -DestinationPath "D:\Organized"
+    Moves all supported media files from C:\Photos to D:\Organized, organizing them by year and month.
+
+.EXAMPLE
+    Move-HomeMedia -SourcePath "C:\Media" -DestinationPath "D:\Sorted" -FileExtensions @('.jpg', '.mp4') -Verbose
+    Moves only .jpg and .mp4 files from C:\Media to D:\Sorted with verbose output.
+
+.NOTES
+    Author: Rob Pitcher
+    Version: 1.0
+    Requires: Windows PowerShell 5.1 or later
+    The function uses Windows Shell COM object to read file metadata.
+
+.LINK
+    https://github.com/robpitcher/mediasorter
+#>
+
 function Move-HomeMedia {
     [CmdletBinding()]
     param(
@@ -8,7 +45,11 @@ function Move-HomeMedia {
         [string]$DestinationPath,
 
         [Parameter(Mandatory = $false)]
-        [string[]]$FileExtensions = @('.jpg', '.jpeg', '.png', '.mp4', '.mov', '.avi', '.mts', '.heic', '.tif', '.bmp', '.mpg', '.3gp', '.wmv', '.gif')
+        [string[]]$FileExtensions = @(
+            '.jpg', '.jpeg', '.png', '.mp4', '.mov',
+            '.avi', '.mts', '.heic', '.tif', '.bmp',
+            '.mpg', '.3gp', '.wmv', '.gif'
+        )
     )
 
     begin {
