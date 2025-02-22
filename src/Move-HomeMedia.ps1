@@ -79,9 +79,16 @@ function Move-HomeMedia {
                     ($folder.GetDetailsOf($item, 12)) :
                     ($folder.GetDetailsOf($item, 208))
 
+                # If date taken is empty, try to get it from supplemental metadata
                 if ([string]::IsNullOrEmpty($dateTaken)) {
-                    Write-Warning "No date taken found for: $($currentFile.FullName)"
-                    return
+                    $tempMetaData = get-content "$currentFile.supplemental-metadata.json" | ConvertFrom-Json
+                    $metaDataTimeStamp = $tempMetaData.photoTakenTime.timestamp
+                    $dateTaken = [DateTimeOffset]::FromUnixTimeSeconds($metaDataTimeStamp).DateTime
+
+                    if ([string]::IsNullOrEmpty($dateTaken)) {
+                        Write-Warning "No date taken found for: $($currentFile.FullName)"
+                        return
+                    }
                 }
 
                 # Parse the date
